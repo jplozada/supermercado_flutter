@@ -4,6 +4,9 @@ import 'package:supermercado_flutter/ui/views/cliente/addCliente.dart';
 import 'package:supermercado_flutter/ui/views/cliente/clienteDetails.dart';
 import 'package:supermercado_flutter/ui/views/cliente/readCliente.dart';
 import 'package:supermercado_flutter/ui/views/homeView.dart';
+import 'package:supermercado_flutter/ui/views/proveedor/addProveedor.dart';
+import 'package:supermercado_flutter/ui/views/proveedor/proveedorDetails.dart';
+import 'package:supermercado_flutter/ui/views/proveedor/readProveedor.dart';
 import 'package:supermercado_flutter/ui/views/usuario/addUsuario.dart';
 import 'package:supermercado_flutter/ui/views/usuario/usuarioDetails.dart';
 import 'package:supermercado_flutter/ui/views/usuario/readUsuario.dart';
@@ -38,6 +41,18 @@ class Router {
       case '/usuarioDetails' :
         return MaterialPageRoute(
             builder: (_)=> UsuarioDetails()
+        ) ;
+      case '/readProveedor' :
+        return  MaterialPageRoute(
+          builder: (_)=> ReadProveedor()
+        );
+      case '/addProveedor' :
+        return MaterialPageRoute(
+          builder: (_)=> AddProveedor()
+        ) ;
+      case '/proveedorDetails' :
+        return MaterialPageRoute(
+            builder: (_)=> ProveedorDetails()
         ) ;
       default:
         return MaterialPageRoute(
