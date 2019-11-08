@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:supermercado_flutter/core/models/productoModel.dart';
 import 'package:provider/provider.dart';
 import 'package:supermercado_flutter/core/viewmodels/CRUDModelProducto.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class AddProducto extends StatefulWidget {
   @override
@@ -10,7 +13,7 @@ class AddProducto extends StatefulWidget {
 
 class _AddProductoState extends State<AddProducto> {
   final _formKey = GlobalKey<FormState>();
-
+  var category;   
   String codigoProducto;
   String nombreProducto;
   String cantidadProducto;
@@ -282,20 +285,49 @@ class _AddProductoState extends State<AddProducto> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text("Proveedor"),
-                                TextFormField(
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      fillColor: Colors.grey[300],
-                                      filled: true,
-                                    ),
-                                    validator: (value) {
-                                      if (value.isEmpty) {
-                                        return 'El campo debe estar llenado';
-                                      }
-                                    },
-                                    onSaved: (value) =>
-                                        proveedorProducto = value),
+                                Text("Proveedor"),                            
+                                StreamBuilder(
+                                    stream: Firestore.instance.collection('proveedor').snapshots(),
+                                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                                      if (!snapshot.hasData)
+                                        Center(
+                                          child: const CupertinoActivityIndicator(),
+                                        );
+                                      return DropdownButtonFormField<String>(
+                                        value: category,
+                                          hint: Text('Proveedor'),
+                                        onChanged: (newValue) {
+                                          setState(() {
+                                            category = newValue;
+                                            proveedorProducto = category;
+                                          });
+                                        },
+                                        validator: (String category) {
+                                          if (category?.isEmpty ?? true) {
+                                            return 'Seleccione el proveedor';
+                                          }
+                                        },
+                                        items: snapshot.data != null
+                                            ? snapshot.data.documents
+                                                .map((DocumentSnapshot document) {
+                                                return new DropdownMenuItem<String>(
+                                                    value: document.data['nombreProveedor'].toString(),
+                                                    child: new Container(
+                                                      //color: primaryColor,
+                                                      child: new Text(
+                                                        document.data['nombreProveedor'].toString(),
+                                                      ),
+                                                    ));
+                                              }).toList()
+                                            : DropdownMenuItem(
+                                                value: 'null',
+                                                child: new Container(
+                                                  height: 100.0,
+                                                  child: new Text('null'),
+                                                ),
+                                              ),
+                                      );
+                                    }),
                               ],
                             ),
                           )),
