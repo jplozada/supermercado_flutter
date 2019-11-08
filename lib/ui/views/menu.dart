@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supermercado_flutter/ui/views/cliente/readCliente.dart';
+import 'package:supermercado_flutter/ui/views/producto/readProducto.dart';
 import 'package:supermercado_flutter/ui/views/proveedor/readProveedor.dart';
 import 'package:supermercado_flutter/ui/views/usuario/readUsuario.dart';
 
@@ -40,7 +41,10 @@ class _PageMenuState extends State<PageMenu> {
           ),
           new ListTile(
             title: new Text('Producto'),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => ReadProducto()));
+            },
           ),
           new ListTile(
             title: new Text('Proveedor'),

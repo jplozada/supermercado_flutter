@@ -162,6 +162,8 @@ class _ModifyClienteState extends State<ModifyCliente> {
                               children: <Widget>[
                                 Text("Telefono"),
                                 TextFormField(
+                                    keyboardType:
+                                        TextInputType.numberWithOptions(),
                                     initialValue:
                                         widget.product.telefono.toString(),
                                     decoration: InputDecoration(
