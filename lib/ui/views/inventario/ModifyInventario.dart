@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:supermercado_flutter/core/models/inventarioModel.dart';
 import 'package:supermercado_flutter/core/viewmodels/CRUDModelInventario.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +26,8 @@ class _ModifyInventarioState extends State<ModifyInventario> {
   String fechaElabInventario;
   String fechaExpInventario;
   String bodegaInventario;
+  DateTime selectedDateElab;
+  DateTime selectedDateExp;
 
   @override
   void initState() {
@@ -32,12 +35,48 @@ class _ModifyInventarioState extends State<ModifyInventario> {
     productoInventario = botonProducto;
     botonBodega = widget.product.bodegaInventario;
     bodegaInventario = botonBodega;
+    selectedDateElab =
+        DateFormat("dd-MM-yyyy").parse(widget.product.fechaElabInventario);
+    fechaElabInventario =
+        "${selectedDateElab.day}-${selectedDateElab.month}-${selectedDateElab.year}";
+    selectedDateExp =
+        DateFormat("dd-MM-yyyy").parse(widget.product.fechaExpInventario);
+    fechaExpInventario =
+        "${selectedDateExp.day}-${selectedDateExp.month}-${selectedDateExp.year}";
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final productProvider = Provider.of<CRUDModelInventario>(context);
+    Future<Null> _selectDateElab(BuildContext context) async {
+      final DateTime picked = await showDatePicker(
+          context: context,
+          initialDate: selectedDateElab,
+          firstDate: DateTime(1900),
+          lastDate: DateTime(2050));
+      if (picked != null && picked != selectedDateElab)
+        setState(() {
+          selectedDateElab = picked;
+          var date = DateTime.parse(selectedDateElab.toString());
+          var formattedDate = "${date.day}-${date.month}-${date.year}";
+          fechaElabInventario = formattedDate;
+        });
+    }
+    Future<Null> _selectDateExp(BuildContext context) async {
+      final DateTime picked = await showDatePicker(
+          context: context,
+          initialDate: selectedDateExp,
+          firstDate: DateTime(1900),
+          lastDate: DateTime(2050));
+      if (picked != null && picked != selectedDateExp)
+        setState(() {
+          selectedDateExp = picked;
+          var date = DateTime.parse(selectedDateExp.toString());
+          var formattedDate = "${date.day}-${date.month}-${date.year}";
+          fechaExpInventario = formattedDate;
+        });
+    }
     return Scaffold(
         appBar: AppBar(
           title: Text('Modificar Inventario'),
@@ -187,24 +226,14 @@ class _ModifyInventarioState extends State<ModifyInventario> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text("Fecha elaboracion"),
-                                TextFormField(
-                                    keyboardType:
-                                        TextInputType.numberWithOptions(),
-                                    initialValue: widget
-                                        .product.fechaElabInventario
-                                        .toString(),
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      fillColor: Colors.grey[300],
-                                      filled: true,
-                                    ),
-                                    validator: (value) {
-                                      if (value.isEmpty) {
-                                        return 'El campo debe estar llenado';
-                                      }
-                                    },
-                                    onSaved: (value) =>
-                                        fechaElabInventario = value),
+                                Text("${selectedDateElab.day}-${selectedDateElab.month}-${selectedDateElab.year}"),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                RaisedButton(
+                                  onPressed: () => _selectDateElab(context),
+                                  child: Text('Select date'),
+                                ),
                               ],
                             ),
                           )),
@@ -219,25 +248,15 @@ class _ModifyInventarioState extends State<ModifyInventario> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text("Fecha Expiracion"),
-                                TextFormField(
-                                    keyboardType:
-                                        TextInputType.numberWithOptions(),
-                                    initialValue: widget
-                                        .product.fechaExpInventario
-                                        .toString(),
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      fillColor: Colors.grey[300],
-                                      filled: true,
-                                    ),
-                                    validator: (value) {
-                                      if (value.isEmpty) {
-                                        return 'El campo debe estar llenado';
-                                      }
-                                    },
-                                    onSaved: (value) =>
-                                        fechaExpInventario = value),
+                                Text("Fecha expiracion"),
+                                Text("${selectedDateExp.day}-${selectedDateExp.month}-${selectedDateExp.year}"),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                RaisedButton(
+                                  onPressed: () => _selectDateExp(context),
+                                  child: Text('Select date'),
+                                ),
                               ],
                             ),
                           )),

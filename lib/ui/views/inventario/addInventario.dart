@@ -12,6 +12,37 @@ class AddInventario extends StatefulWidget {
 
 class _AddInventarioState extends State<AddInventario> {
   final _formKey = GlobalKey<FormState>();
+  //Fechas
+  DateTime selectedDateElab = DateTime.now();
+  Future<Null> _selectDateElab(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDateElab,
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2050));
+    if (picked != null && picked != selectedDateElab)
+      setState(() {
+        selectedDateElab = picked;
+        var date = DateTime.parse(selectedDateElab.toString());
+        var formattedDate = "${date.day}-${date.month}-${date.year}";
+        fechaElabInventario = formattedDate;
+      });
+  }
+  DateTime selectedDateExp = DateTime.now();
+  Future<Null> _selectDateExp(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDateExp,
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2050));
+    if (picked != null && picked != selectedDateExp)
+      setState(() {
+        selectedDateExp = picked;
+        var date = DateTime.parse(selectedDateExp.toString());
+        var formattedDate = "${date.day}-${date.month}-${date.year}";
+        fechaExpInventario = formattedDate;
+      });
+  }
   var botonBodega;
   var botonProducto;
   String codigoInventario;
@@ -20,6 +51,13 @@ class _AddInventarioState extends State<AddInventario> {
   String fechaElabInventario;
   String fechaExpInventario;
   String bodegaInventario;
+
+  @override
+    void initState() {
+      fechaElabInventario = "${selectedDateElab.day}-${selectedDateElab.month}-${selectedDateElab.year}";
+      fechaExpInventario = "${selectedDateExp.day}-${selectedDateExp.month}-${selectedDateExp.year}";
+      super.initState();
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -173,21 +211,14 @@ class _AddInventarioState extends State<AddInventario> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text("Fecha elaboracion"),
-                                TextFormField(
-                                    keyboardType:
-                                        TextInputType.numberWithOptions(),
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      fillColor: Colors.grey[300],
-                                      filled: true,
-                                    ),
-                                    validator: (value) {
-                                      if (value.isEmpty) {
-                                        return 'El campo debe estar llenado';
-                                      }
-                                    },
-                                    onSaved: (value) =>
-                                        fechaElabInventario = value),
+                                Text("${selectedDateElab.day}-${selectedDateElab.month}-${selectedDateElab.year}"),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                RaisedButton(
+                                  onPressed: () => _selectDateElab(context),
+                                  child: Text('Select date'),
+                                ),
                               ],
                             ),
                           )),
@@ -202,22 +233,15 @@ class _AddInventarioState extends State<AddInventario> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text("Fecha Expiracion"),
-                                TextFormField(
-                                    keyboardType:
-                                        TextInputType.numberWithOptions(),
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      fillColor: Colors.grey[300],
-                                      filled: true,
-                                    ),
-                                    validator: (value) {
-                                      if (value.isEmpty) {
-                                        return 'El campo debe estar llenado';
-                                      }
-                                    },
-                                    onSaved: (value) =>
-                                        fechaExpInventario = value),
+                                Text("Fecha expiracion"),
+                                Text("${selectedDateExp.day}-${selectedDateExp.month}-${selectedDateExp.year}"),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                RaisedButton(
+                                  onPressed: () => _selectDateExp(context),
+                                  child: Text('Select date'),
+                                ),
                               ],
                             ),
                           )),
