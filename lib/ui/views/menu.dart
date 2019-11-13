@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supermercado_flutter/ui/views/bodega/readBodega.dart';
 import 'package:supermercado_flutter/ui/views/cliente/readCliente.dart';
+import 'package:supermercado_flutter/ui/views/inventario/readInventario.dart';
 import 'package:supermercado_flutter/ui/views/producto/readProducto.dart';
 import 'package:supermercado_flutter/ui/views/proveedor/readProveedor.dart';
 import 'package:supermercado_flutter/ui/views/usuario/readUsuario.dart';
@@ -55,8 +56,11 @@ class _PageMenuState extends State<PageMenu> {
             },
           ),
           new ListTile(
-            title: new Text('Perfil de usuario'),
-            onTap: () {},
+            title: new Text('Inventario'),
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => ReadInventario()));
+            },
           ),
           new ListTile(
             title: new Text('Bodegas'),

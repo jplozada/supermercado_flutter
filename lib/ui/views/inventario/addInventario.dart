@@ -1,35 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:supermercado_flutter/core/models/productoModel.dart';
+import 'package:supermercado_flutter/core/models/inventarioModel.dart';
 import 'package:provider/provider.dart';
-import 'package:supermercado_flutter/core/viewmodels/CRUDModelProducto.dart';
+import 'package:supermercado_flutter/core/viewmodels/CRUDModelInventario.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
-class AddProducto extends StatefulWidget {
+class AddInventario extends StatefulWidget {
   @override
-  _AddProductoState createState() => _AddProductoState();
+  _AddInventarioState createState() => _AddInventarioState();
 }
 
-class _AddProductoState extends State<AddProducto> {
+class _AddInventarioState extends State<AddInventario> {
   final _formKey = GlobalKey<FormState>();
-  var botonProducto;   
-  String codigoProducto;
-  String nombreProducto;
-  String cantidadProducto;
-  String preCostoProducto;
-  String preVentaProducto;
-  String stockMinProducto;
-  String stockMaxProducto;
-  String impuestoProducto;
-  String proveedorProducto;
+  var botonBodega;
+  var botonProducto;
+  String codigoInventario;
+  String productoInventario;
+  String cantidadInventario;
+  String fechaElabInventario;
+  String fechaExpInventario;
+  String bodegaInventario;
 
   @override
   Widget build(BuildContext context) {
-    var productProvider = Provider.of<CRUDModelProducto>(context);
+    var productProvider = Provider.of<CRUDModelInventario>(context);
     return Scaffold(
         appBar: AppBar(
-          title: Text('Añadir Producto'),
+          title: Text('Añadir Inventario'),
           backgroundColor: Color(0xff2c363f),
         ),
         body: SingleChildScrollView(
@@ -63,7 +60,8 @@ class _AddProductoState extends State<AddProducto> {
                                         return 'El campo debe estar llenado';
                                       }
                                     },
-                                    onSaved: (value) => codigoProducto = value),
+                                    onSaved: (value) =>
+                                        codigoInventario = value),
                               ],
                             ),
                           )),
@@ -78,19 +76,58 @@ class _AddProductoState extends State<AddProducto> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text("Nombre"),
-                                TextFormField(
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      fillColor: Colors.grey[300],
-                                      filled: true,
-                                    ),
-                                    validator: (value) {
-                                      if (value.isEmpty) {
-                                        return 'El campo debe estar llenado';
-                                      }
-                                    },
-                                    onSaved: (value) => nombreProducto = value),
+                                Text("Producto"),
+                                StreamBuilder(
+                                    stream: Firestore.instance
+                                        .collection('producto')
+                                        .snapshots(),
+                                    builder: (context,
+                                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                                      if (!snapshot.hasData)
+                                        Center(
+                                          child:
+                                              const CupertinoActivityIndicator(),
+                                        );
+                                      return DropdownButtonFormField<String>(
+                                        value: botonProducto,
+                                        hint: Text('Producto'),
+                                        onChanged: (newValue) {
+                                          setState(() {
+                                            botonProducto = newValue;
+                                            productoInventario = botonProducto;
+                                          });
+                                        },
+                                        validator: (String botonProducto) {
+                                          if (botonProducto?.isEmpty ?? true) {
+                                            return 'Seleccione el producto';
+                                          }
+                                        },
+                                        items: snapshot.data != null
+                                            ? snapshot.data.documents.map(
+                                                (DocumentSnapshot document) {
+                                                return new DropdownMenuItem<
+                                                        String>(
+                                                    value: document
+                                                        .data['nombreProducto']
+                                                        .toString(),
+                                                    child: new Container(
+                                                      //color: primaryColor,
+                                                      child: new Text(
+                                                        document.data[
+                                                                'nombreProducto']
+                                                            .toString(),
+                                                      ),
+                                                    ));
+                                              }).toList()
+                                            : DropdownMenuItem(
+                                                value: 'null',
+                                                child: new Container(
+                                                  height: 100.0,
+                                                  child: new Text('null'),
+                                                ),
+                                              ),
+                                      );
+                                    }),
                               ],
                             ),
                           )),
@@ -120,7 +157,7 @@ class _AddProductoState extends State<AddProducto> {
                                       }
                                     },
                                     onSaved: (value) =>
-                                        cantidadProducto = value),
+                                        cantidadInventario = value),
                               ],
                             ),
                           )),
@@ -135,7 +172,7 @@ class _AddProductoState extends State<AddProducto> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text("Precio de costo"),
+                                Text("Fecha elaboracion"),
                                 TextFormField(
                                     keyboardType:
                                         TextInputType.numberWithOptions(),
@@ -150,7 +187,7 @@ class _AddProductoState extends State<AddProducto> {
                                       }
                                     },
                                     onSaved: (value) =>
-                                        preCostoProducto = value),
+                                        fechaElabInventario = value),
                               ],
                             ),
                           )),
@@ -165,7 +202,7 @@ class _AddProductoState extends State<AddProducto> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text("Precio de venta"),
+                                Text("Fecha Expiracion"),
                                 TextFormField(
                                     keyboardType:
                                         TextInputType.numberWithOptions(),
@@ -180,7 +217,7 @@ class _AddProductoState extends State<AddProducto> {
                                       }
                                     },
                                     onSaved: (value) =>
-                                        preVentaProducto = value),
+                                        fechaExpInventario = value),
                               ],
                             ),
                           )),
@@ -195,127 +232,46 @@ class _AddProductoState extends State<AddProducto> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text("Stock minimo"),
-                                TextFormField(
-                                    keyboardType:
-                                        TextInputType.numberWithOptions(),
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      fillColor: Colors.grey[300],
-                                      filled: true,
-                                    ),
-                                    validator: (value) {
-                                      if (value.isEmpty) {
-                                        return 'El campo debe estar llenado';
-                                      }
-                                    },
-                                    onSaved: (value) =>
-                                        stockMinProducto = value),
-                              ],
-                            ),
-                          )),
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                          flex: 1,
-                          child: Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text("Stock maximo"),
-                                TextFormField(
-                                    keyboardType:
-                                        TextInputType.numberWithOptions(),
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      fillColor: Colors.grey[300],
-                                      filled: true,
-                                    ),
-                                    validator: (value) {
-                                      if (value.isEmpty) {
-                                        return 'El campo debe estar llenado';
-                                      }
-                                    },
-                                    onSaved: (value) =>
-                                        stockMaxProducto = value),
-                              ],
-                            ),
-                          )),
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                          flex: 1,
-                          child: Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text("Impuesto"),
-                                TextFormField(
-                                    keyboardType:
-                                        TextInputType.numberWithOptions(),
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      fillColor: Colors.grey[300],
-                                      filled: true,
-                                    ),
-                                    validator: (value) {
-                                      if (value.isEmpty) {
-                                        return 'El campo debe estar llenado';
-                                      }
-                                    },
-                                    onSaved: (value) =>
-                                        impuestoProducto = value),
-                              ],
-                            ),
-                          )),
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                          flex: 1,
-                          child: Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text("Proveedor"),                            
+                                Text("Bodega y perchas"),
                                 StreamBuilder(
-                                    stream: Firestore.instance.collection('proveedor').snapshots(),
-                                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                                    stream: Firestore.instance
+                                        .collection('bodega')
+                                        .snapshots(),
+                                    builder: (context,
+                                        AsyncSnapshot<QuerySnapshot> snapshot) {
                                       if (!snapshot.hasData)
                                         Center(
-                                          child: const CupertinoActivityIndicator(),
+                                          child:
+                                              const CupertinoActivityIndicator(),
                                         );
                                       return DropdownButtonFormField<String>(
-                                        value: botonProducto,
-                                          hint: Text('Proveedor'),
+                                        value: botonBodega,
+                                        hint: Text('bodega'),
                                         onChanged: (newValue) {
                                           setState(() {
-                                            botonProducto = newValue;
-                                            proveedorProducto = botonProducto;
+                                            botonBodega = newValue;
+                                            bodegaInventario = botonBodega;
                                           });
                                         },
-                                        validator: (String botonProducto) {
-                                          if (botonProducto?.isEmpty ?? true) {
-                                            return 'Seleccione el proveedor';
+                                        validator: (String botonBodega) {
+                                          if (botonBodega?.isEmpty ?? true) {
+                                            return 'Seleccione la bodega';
                                           }
                                         },
                                         items: snapshot.data != null
-                                            ? snapshot.data.documents
-                                                .map((DocumentSnapshot document) {
-                                                return new DropdownMenuItem<String>(
-                                                    value: document.data['nombreProveedor'].toString(),
+                                            ? snapshot.data.documents.map(
+                                                (DocumentSnapshot document) {
+                                                return new DropdownMenuItem<
+                                                        String>(
+                                                    value: document
+                                                        .data['nombreBodega']
+                                                        .toString(),
                                                     child: new Container(
                                                       //color: primaryColor,
                                                       child: new Text(
-                                                        document.data['nombreProveedor'].toString(),
+                                                        document.data[
+                                                                'nombreBodega']
+                                                            .toString(),
                                                       ),
                                                     ));
                                               }).toList()
@@ -338,16 +294,14 @@ class _AddProductoState extends State<AddProducto> {
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
-                        await productProvider.addProduct(Producto(
-                            codigoProducto: int.parse(codigoProducto),
-                            nombreProducto: nombreProducto,
-                            cantidadProducto: int.parse(cantidadProducto),
-                            preCostoProducto: int.parse(preCostoProducto),
-                            preVentaProducto: int.parse(preVentaProducto),
-                            stockMinProducto: int.parse(stockMinProducto),
-                            stockMaxProducto: int.parse(stockMaxProducto),
-                            impuestoProducto: int.parse(impuestoProducto),
-                            proveedorProducto: proveedorProducto));
+                        await productProvider.addProduct(Inventario(
+                          codigoInventario: int.parse(codigoInventario),
+                          productoInventario: productoInventario,
+                          cantidadInventario: int.parse(cantidadInventario),
+                          fechaElabInventario: fechaElabInventario,
+                          fechaExpInventario: fechaExpInventario,
+                          bodegaInventario: bodegaInventario,
+                        ));
                         Navigator.pop(context);
                       }
                     },

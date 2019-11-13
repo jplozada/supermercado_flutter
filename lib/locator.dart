@@ -4,6 +4,7 @@ import 'package:supermercado_flutter/core/viewmodels/CRUDModelUsuario.dart';
 import 'package:supermercado_flutter/core/viewmodels/CRUDModelProveedor.dart';
 import 'package:supermercado_flutter/core/viewmodels/CRUDModelProducto.dart';
 import 'package:supermercado_flutter/core/viewmodels/CRUDModelBodega.dart';
+import 'package:supermercado_flutter/core/viewmodels/CRUDModelInventario.dart';
 
 import './core/services/api.dart';
 import './core/viewmodels/CRUDModelCliente.dart';
@@ -21,4 +22,6 @@ void setupLocator() {
   locator.registerLazySingleton(() => CRUDModelProducto()) ;
   locator.registerLazySingleton(() => ApiBodega('bodega'));
   locator.registerLazySingleton(() => CRUDModelBodega()) ;
+  locator.registerLazySingleton(() => ApiInventario('inventario'));
+  locator.registerLazySingleton(() => CRUDModelInventario()) ;
 }

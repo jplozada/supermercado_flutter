@@ -7,6 +7,9 @@ import 'package:supermercado_flutter/ui/views/cliente/addCliente.dart';
 import 'package:supermercado_flutter/ui/views/cliente/clienteDetails.dart';
 import 'package:supermercado_flutter/ui/views/cliente/readCliente.dart';
 import 'package:supermercado_flutter/ui/views/homeView.dart';
+import 'package:supermercado_flutter/ui/views/inventario/addInventario.dart';
+import 'package:supermercado_flutter/ui/views/inventario/inventarioDetails.dart';
+import 'package:supermercado_flutter/ui/views/inventario/readInventario.dart';
 import 'package:supermercado_flutter/ui/views/producto/addProducto.dart';
 import 'package:supermercado_flutter/ui/views/producto/productoDetails.dart';
 import 'package:supermercado_flutter/ui/views/producto/readProducto.dart';
@@ -83,6 +86,18 @@ class Router {
       case '/bodegaDetails' :
         return MaterialPageRoute(
             builder: (_)=> BodegaDetails()
+        ) ;
+      case '/readInventario' :
+        return  MaterialPageRoute(
+          builder: (_)=> ReadInventario()
+        );
+      case '/addInventario' :
+        return MaterialPageRoute(
+          builder: (_)=> AddInventario()
+        ) ;
+      case '/inventarioDetails' :
+        return MaterialPageRoute(
+            builder: (_)=> InventarioDetails()
         ) ;
       default:
         return MaterialPageRoute(
