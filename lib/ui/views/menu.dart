@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:supermercado_flutter/ui/views/bodega/readBodega.dart';
 import 'package:supermercado_flutter/ui/views/cliente/readCliente.dart';
 import 'package:supermercado_flutter/ui/views/producto/readProducto.dart';
 import 'package:supermercado_flutter/ui/views/proveedor/readProveedor.dart';
@@ -59,7 +60,10 @@ class _PageMenuState extends State<PageMenu> {
           ),
           new ListTile(
             title: new Text('Bodegas'),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => ReadBodega()));
+            },
           ),
         ],
       )),

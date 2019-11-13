@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:supermercado_flutter/ui/views/bodega/addBodega.dart';
+import 'package:supermercado_flutter/ui/views/bodega/bodegaDetails.dart';
+import 'package:supermercado_flutter/ui/views/bodega/readBodega.dart';
 import 'package:supermercado_flutter/ui/views/cliente/addCliente.dart';
 import 'package:supermercado_flutter/ui/views/cliente/clienteDetails.dart';
 import 'package:supermercado_flutter/ui/views/cliente/readCliente.dart';
@@ -68,6 +71,18 @@ class Router {
       case '/productoDetails' :
         return MaterialPageRoute(
             builder: (_)=> ProductoDetails()
+        ) ;
+      case '/readBodega' :
+        return  MaterialPageRoute(
+          builder: (_)=> ReadBodega()
+        );
+      case '/addBodega' :
+        return MaterialPageRoute(
+          builder: (_)=> AddBodega()
+        ) ;
+      case '/bodegaDetails' :
+        return MaterialPageRoute(
+            builder: (_)=> BodegaDetails()
         ) ;
       default:
         return MaterialPageRoute(

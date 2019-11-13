@@ -6,6 +6,7 @@ import './core/viewmodels/CRUDModelCliente.dart';
 import './core/viewmodels/CRUDModelUsuario.dart';
 import './core/viewmodels/CRUDModelProveedor.dart';
 import './core/viewmodels/CRUDModelProducto.dart';
+import './core/viewmodels/CRUDModelBodega.dart';
 
 void main() {
   setupLocator();
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(builder: (_) => locator<CRUDModelUsuario>()),
         ChangeNotifierProvider(builder: (_) => locator<CRUDModelProveedor>()),
         ChangeNotifierProvider(builder: (_) => locator<CRUDModelProducto>()),
+        ChangeNotifierProvider(builder: (_) => locator<CRUDModelBodega>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
