@@ -48,7 +48,7 @@ class VentasCard extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "${itemDetails.producto}",
+                            "${itemDetails.id}",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontWeight: FontWeight.w400,
@@ -74,7 +74,7 @@ class VentasCard extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "${itemDetails.codProducto}",
+                            "venta 1",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontWeight: FontWeight.w400,
@@ -100,7 +100,7 @@ class VentasCard extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "${itemDetails.fecha}",
+                            "venta 1",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontWeight: FontWeight.w400,

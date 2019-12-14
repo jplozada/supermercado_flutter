@@ -127,11 +127,11 @@ class _ReadVentasState extends State<ReadVentas> {
                 'Total'
               ],
               ...products.map((item) => [
-                    item.codigo,
-                    item.producto,
-                    item.cantidad.toString(),
-                    item.precioUnitario.toString(),
-                    item.total.toString()
+                    // item.codigo,
+                    // item.producto,
+                    // item.cantidad.toString(),
+                    // item.precioUnitario.toString(),
+                    // item.total.toString()
                   ])
             ],
           ),

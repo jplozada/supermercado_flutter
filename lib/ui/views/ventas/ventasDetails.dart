@@ -4,10 +4,15 @@ import 'package:supermercado_flutter/core/viewmodels/CRUDModelVentas.dart';
 import 'package:supermercado_flutter/ui/views/ventas/ModifyVentas.dart';
 import 'package:provider/provider.dart';
 
-class VentasDetails extends StatelessWidget {
+class VentasDetails extends StatefulWidget {
   final Ventas product;
 
   VentasDetails({@required this.product});
+  @override
+  _VentasDetailsState createState() => _VentasDetailsState();
+}
+
+class _VentasDetailsState extends State<VentasDetails> {
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +27,7 @@ class VentasDetails extends StatelessWidget {
             iconSize: 35,
             icon: Icon(Icons.delete_forever),
             onPressed: () async {
-              await productProvider.removeProduct(product.id);
+              await productProvider.removeProduct(widget.product.id);
               Navigator.pop(context);
             },
           ),
@@ -30,12 +35,12 @@ class VentasDetails extends StatelessWidget {
             iconSize: 35,
             icon: Icon(Icons.edit),
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => ModifyVentas(
-                            product: product,
-                          )));
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (_) => ModifyVentas(
+              //               product: product,
+              //             )));
             },
           )
         ],
@@ -54,7 +59,7 @@ class VentasDetails extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text("Codigo Venta"),
-                        Text(product.codigo)
+                        Text(widget.product.sumaTotalVenta.toString())
                       ],
                     ),
                   )),
@@ -70,7 +75,7 @@ class VentasDetails extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text("Codigo del producto"),
-                        Text(product.codProducto)
+                        Text(widget.product.listaCodigoBarrasVenta.values.toString())
                       ],
                     ),
                   )),
@@ -86,7 +91,7 @@ class VentasDetails extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text("Nombre Producto"),
-                        Text(product.producto)
+                        Text(widget.product.listaProductoVenta.values.toString())
                       ],
                     ),
                   )),
@@ -102,7 +107,7 @@ class VentasDetails extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text("Cantidad"),
-                        Text(product.cantidad.toString())
+                        Text(widget.product.listaPrecioVenta.values.toString())
                       ],
                     ),
                   )),
@@ -118,7 +123,7 @@ class VentasDetails extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text("Precio Unitario"),
-                        Text(product.precioUnitario.toString())
+                        Text(widget.product.listaCantidadVenta.values.toString())
                       ],
                     ),
                   )),
@@ -134,7 +139,7 @@ class VentasDetails extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text("Sub Total"),
-                        Text(product.subTotal.toString())
+                        Text(widget.product.listaSubTotalVenta.values.toString())
                       ],
                     ),
                   )),
@@ -149,24 +154,8 @@ class VentasDetails extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text("Total"),
-                        Text(product.total.toString())
-                      ],
-                    ),
-                  )),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text("Fecha"),
-                        Text(product.fecha)
+                        Text("Sub Total"),
+                        Text(widget.product.fechaVenta.toDate().toString())
                       ],
                     ),
                   )),

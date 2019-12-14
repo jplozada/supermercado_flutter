@@ -25,6 +25,6 @@ void setupLocator() {
   locator.registerLazySingleton(() => CRUDModelBodega()) ;
   locator.registerLazySingleton(() => ApiInventario('inventario'));
   locator.registerLazySingleton(() => CRUDModelInventario()) ;
-  locator.registerLazySingleton(() => ApiVentas('ventas'));
+  locator.registerLazySingleton(() => ApiVentas('ventas1'));
   locator.registerLazySingleton(() => CRUDModelVentas()) ;
 }
