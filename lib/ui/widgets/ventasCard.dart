@@ -38,7 +38,7 @@ class VentasCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            'Venta:',
+                            'CodVenta:',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
@@ -64,32 +64,6 @@ class VentasCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            'Codigo:',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 18,
-                              fontStyle: FontStyle.italic,
-                              color: Colors.black87,
-                            ),
-                          ),
-                          Text(
-                            "venta 1",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 18,
-                              fontStyle: FontStyle.italic,
-                              color: Colors.black87,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Divider(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text(
                             'Fecha:',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -100,7 +74,7 @@ class VentasCard extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "venta 1",
+                            "${itemDetails.fechaVenta.toDate().day}/${itemDetails.fechaVenta.toDate().month}/${itemDetails.fechaVenta.toDate().year} - ${itemDetails.fechaVenta.toDate().hour}:${itemDetails.fechaVenta.toDate().minute}",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontWeight: FontWeight.w400,

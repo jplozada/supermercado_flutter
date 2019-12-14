@@ -53,17 +53,17 @@ class _ReadVentasState extends State<ReadVentas> {
         title: Text('Ventas'),
         backgroundColor: Color(0xff2c363f),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.picture_as_pdf,
-              color: Colors.white,
-            ),
-            onPressed: () {
-//              Permission.openSettings();
-//              getSinglePermissionStatus(context);
-              _getPermissionsStatus();
-            },
-          ),
+//           IconButton(
+//             icon: Icon(
+//               Icons.picture_as_pdf,
+//               color: Colors.white,
+//             ),
+//             onPressed: () {
+// //              Permission.openSettings();
+// //              getSinglePermissionStatus(context);
+//               _getPermissionsStatus();
+//             },
+//           ),
           SizedBox(width: 10),
         ],
       ),

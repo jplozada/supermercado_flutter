@@ -69,7 +69,7 @@ class _AddVentasState extends State<AddVentas> {
     Timestamp fechaVenta = Timestamp.now();
     return Scaffold(
         appBar: AppBar(
-          title: Text('Añadir Producto'),
+          title: Text('Añadir Venta'),
           backgroundColor: Color(0xff2c363f),
         ),
         body: SingleChildScrollView(
@@ -94,7 +94,7 @@ class _AddVentasState extends State<AddVentas> {
                                   "Leer codigo de barras",
                                   style: TextStyle(color: Colors.white),
                                 ),
-                                color: Colors.blue,
+                                color: Color(0xff403F4C),
                               ),
                             )
                           ],
@@ -197,7 +197,8 @@ class _AddVentasState extends State<AddVentas> {
                                 child: Padding(
                                   padding: EdgeInsets.all(0),
                                   child: RaisedButton(
-                                    child: Icon(Icons.add),
+                                    child: Icon(Icons.add, color: Colors.white,),
+                                    color: Color(0xff403F4C),
                                     onPressed: () {
                                       setState(() {
                                         if (_formKey1.currentState.validate()) {
@@ -339,6 +340,7 @@ class _AddVentasState extends State<AddVentas> {
                       ],
                     ),
                   ),
+                  SizedBox(height: 40,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
@@ -347,9 +349,9 @@ class _AddVentasState extends State<AddVentas> {
                         child: RaisedButton(
                           child: Icon(
                             Icons.delete,
-                            color: Colors.black,
+                            color: Color(0xffFFD9DA),
                           ),
-                          color: Colors.redAccent,
+                          color: Color(0xff89023E),
                           onPressed: () {
                             setState(() {
                               listaCodigoBarrasVenta.remove(id);
@@ -369,47 +371,47 @@ class _AddVentasState extends State<AddVentas> {
                       ),
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.all(0),
-                        child: RaisedButton(
-                          child: Icon(
-                            Icons.add_alert,
-                            color: Colors.white,
-                          ),
-                          color: Colors.brown,
-                          onPressed: () {
-                            //update cantidadProducto
-                            databaseReference
-                                .collection("producto")
-                                .getDocuments()
-                                .then((QuerySnapshot snapshot) {
-                              snapshot.documents.forEach((d) {
-                                maxCantidadVenta = d.data['cantidadProducto'];
-                                if (listaCantidadVenta
-                                    .containsKey(d.documentID)) {
-                                  print(listaCantidadVenta[d.documentID]);
-                                  cantidadFinalVenta = maxCantidadVenta -
-                                      listaCantidadVenta[d.documentID];
-                                  databaseReference
-                                      .collection('producto')
-                                      .document(d.documentID)
-                                      .updateData({
-                                    'cantidadProducto': cantidadFinalVenta
-                                  });
-                                }
-                              });
-                            });
-                            setState(() {
-                              maxCantidadVenta = 0;
-                            });
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.end,
+                  //   children: <Widget>[
+                  //     Padding(
+                  //       padding: EdgeInsets.all(0),
+                  //       child: RaisedButton(
+                  //         child: Icon(
+                  //           Icons.add_alert,
+                  //           color: Colors.white,
+                  //         ),
+                  //         color: Colors.brown,
+                  //         onPressed: () {
+                  //           //update cantidadProducto
+                  //           databaseReference
+                  //               .collection("producto")
+                  //               .getDocuments()
+                  //               .then((QuerySnapshot snapshot) {
+                  //             snapshot.documents.forEach((d) {
+                  //               maxCantidadVenta = d.data['cantidadProducto'];
+                  //               if (listaCantidadVenta
+                  //                   .containsKey(d.documentID)) {
+                  //                 print(listaCantidadVenta[d.documentID]);
+                  //                 cantidadFinalVenta = maxCantidadVenta -
+                  //                     listaCantidadVenta[d.documentID];
+                  //                 databaseReference
+                  //                     .collection('producto')
+                  //                     .document(d.documentID)
+                  //                     .updateData({
+                  //                   'cantidadProducto': cantidadFinalVenta
+                  //                 });
+                  //               }
+                  //             });
+                  //           });
+                  //           setState(() {
+                  //             maxCantidadVenta = 0;
+                  //           });
+                  //         },
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   //
                   RaisedButton(
                     splashColor: Colors.red,
