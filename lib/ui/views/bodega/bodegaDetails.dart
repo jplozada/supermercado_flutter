@@ -3,6 +3,7 @@ import 'package:supermercado_flutter/core/models/bodegaModel.dart';
 import 'package:supermercado_flutter/core/viewmodels/CRUDModelBodega.dart';
 import 'package:supermercado_flutter/ui/views/bodega/ModifyBodega.dart';
 import 'package:provider/provider.dart';
+import 'package:supermercado_flutter/ui/views/bodega/mapsBodega.dart';
 
 class BodegaDetails extends StatelessWidget {
   final Bodega product;
@@ -53,7 +54,13 @@ class BodegaDetails extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text("Nombre"),
+                        Text(
+                          "Nombre:",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                          ),
+                        ),
                         Text(product.nombreBodega)
                       ],
                     ),
@@ -69,8 +76,13 @@ class BodegaDetails extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text("Ubicacion"),
-                        Text(product.ubicacionBodega)
+                        Text(
+                          "Ubicacion:",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                          ),
+                        ),                        Text(product.ubicacionBodega)
                       ],
                     ),
                   )),
@@ -84,11 +96,26 @@ class BodegaDetails extends StatelessWidget {
                     padding: EdgeInsets.all(10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[Text("Descripcion"), Text(product.descripcionBodega)],
+                      children: <Widget>[
+                                                Text(
+                          "Descripcion:",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Text(product.descripcionBodega)
+                      ],
                     ),
                   )),
             ],
           ),
+          Container(height: 20,),
+          Container(
+            width: double.infinity,
+            height: 300,
+            child: MapsBodega(),
+          )
         ],
       ),
     );

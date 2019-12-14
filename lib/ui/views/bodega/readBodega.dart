@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:supermercado_flutter/core/models/bodegaModel.dart';
 import 'package:supermercado_flutter/core/viewmodels/CRUDModelBodega.dart';
+import 'package:supermercado_flutter/ui/views/bodega/mapsBodega.dart';
 import 'package:supermercado_flutter/ui/widgets/bodegaCard.dart';
 import 'package:provider/provider.dart';
 
@@ -28,6 +29,16 @@ class _ReadBodegaState extends State<ReadBodega> {
       appBar: AppBar(
         title: Text('Bodegas'),
         backgroundColor: Color(0xff2c363f),
+        actions: <Widget>[
+          IconButton(
+            iconSize: 35,
+            icon: Icon(Icons.map),
+            onPressed: () async {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => MapsBodega()));
+            },
+          ),
+        ],
       ),
       body: Container(
         child: StreamBuilder(
