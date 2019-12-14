@@ -367,11 +367,11 @@ class _AddProductoState extends State<AddProducto> {
                             codigoProducto: int.parse(codigoProducto),
                             nombreProducto: nombreProducto,
                             cantidadProducto: int.parse(cantidadProducto),
-                            preCostoProducto: int.parse(preCostoProducto),
-                            preVentaProducto: int.parse(preVentaProducto),
+                            preCostoProducto: preCostoProducto,
+                            preVentaProducto: preVentaProducto,
                             stockMinProducto: int.parse(stockMinProducto),
                             stockMaxProducto: int.parse(stockMaxProducto),
-                            impuestoProducto: int.parse(impuestoProducto),
+                            impuestoProducto: impuestoProducto,
                             proveedorProducto: proveedorProducto));
                         Navigator.pop(context);
                       }

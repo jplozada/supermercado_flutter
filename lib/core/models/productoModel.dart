@@ -4,11 +4,11 @@ class Producto {
   int codigoProducto;
   String nombreProducto;
   int cantidadProducto;
-  int preCostoProducto;
-  int preVentaProducto;
+  String preCostoProducto;
+  String preVentaProducto;
   int stockMinProducto;
   int stockMaxProducto;
-  int impuestoProducto;
+  String impuestoProducto;
   String proveedorProducto;
 
   Producto({this.id, this.codigoProducto, this.nombreProducto,this.cantidadProducto,this.preCostoProducto,this.preVentaProducto,this.stockMinProducto, this.stockMaxProducto,this.impuestoProducto,this.proveedorProducto});
